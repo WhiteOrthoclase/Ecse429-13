@@ -13,7 +13,9 @@ android:
 script:
 
     git clone https://github.com/facebook/infer.git
+
     cd infer
+
     ./build-infer.sh java
 
     export PATH=`pwd`/infer/bin:$PATH
