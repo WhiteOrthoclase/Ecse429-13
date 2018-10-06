@@ -9,3 +9,13 @@ android:
     - 'android-sdk-preview-license-52d11cd2'
     - 'android-sdk-license-.+'
     - 'google-gdk-license-.+'
+
+script:
+
+    git clone https://github.com/facebook/infer.git
+    cd infer
+    ./build-infer.sh java
+
+    export PATH=`pwd`/infer/bin:$PATH
+
+    infer run -- gradle build
