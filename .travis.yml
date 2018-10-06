@@ -12,9 +12,10 @@ android:
 
 script:
     
-    - docker pull ocaml/opam2
     - git clone https://github.com/facebook/infer.git
     - cd infer
-    - ./build-infer.sh java
+    - ./autogen.sh
+    - ./configure
+    - make
     - export PATH=`pwd`/infer/bin:$PATH
     - infer run -- gradle build
