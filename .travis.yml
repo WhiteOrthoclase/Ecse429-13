@@ -12,8 +12,9 @@ android:
 
 script:
     
-    - wget -O Dockerfile https://raw.githubusercontent.com/facebook/infer/master/docker/Dockerfile
-    - wget -O run.sh https://raw.githubusercontent.com/facebook/infer/master/docker/run.sh
-    - sh run.sh
+    - VERSION=0.15.0
+    - curl -sSL "https://github.com/facebook/infer/releases/download/v$VERSION/infer-linux64-v$VERSION.tar.xz"
+    - | sudo tar -C /opt -xJ && 
+    - ln -s "/opt/infer-linux64-v$VERSION/bin/infer" /usr/local/bin/infer
     - export PATH=`pwd`/infer/bin:$PATH
     - infer run -- gradle build
