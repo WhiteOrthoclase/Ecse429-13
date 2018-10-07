@@ -1,16 +1,5 @@
 language: android
 
-matrix:
-  include:
-
-      services:
-        - docker
-      before_install:
-        - source .scripts/prepare-container-with-infer.sh
-        # run container with installed Infer
-        - docker run -itd $INFER_IMAGE_NAME
-        # copy build folder ("infer-plugin") to container
-        - docker cp $TRAVIS_BUILD_DIR $(docker ps -q):/
 android:
   components:
     - build-tools-27.0.3
@@ -23,5 +12,9 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-    - docker exec -it $(docker ps -q) /bin/bash -c 'export ANDROID_HOME=${TRAVIS_BUILD_DIR}/android-sdk; export PATH=${ANDROID_HOME}/:${ANDROID_HOME}/tools/:${ANDROID_HOME}/platform-tools/:${PATH}; cp -R /opt/android-sdk-linux ${TRAVIS_BUILD_DIR}/android-sdk; eval echo \"y\" | android update sdk --no-ui --force --all --filter extra-android-m2repository; eval echo \"y\" | android update sdk --no-ui --force --all --filter extra-google-m2repository; eval echo \"y\" | android update sdk --no-ui --force --all --filter extra-android-support; eval echo \"y\" | android update sdk --no-ui --force --all --filter extra-google-google_play_services; eval echo \"y\" | android update sdk --no-ui --force --all --filter tools; eval echo \"y\" | android update sdk --no-ui --force --all --filter platform-tools; eval echo \"y\" | android update sdk --no-ui --force --all --filter android-23; eval echo \"y\" | android update sdk --no-ui --force --all --filter build-tools-23.0.2; cd /infer-plugin; ./gradlew build --stacktrace; exit $?'
+    - sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+    - git clone https://github.com/facebook/infer.git
+    - cd infer
+    - ./build-infer.sh java
+    - export PATH=`pwd`/infer/bin:$PATH
     - infer run -- ./gradlew build
