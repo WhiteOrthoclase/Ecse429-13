@@ -1,4 +1,4 @@
-language: android
+language: android  
 
 android:
   components:
@@ -12,7 +12,9 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-    - curl -OL "https://github.com/facebook/infer/releases/download/v0.15.0/infer-linux64-v0.15.0.tar.xz" 
-    - tar -xzvf infer-linux64-v0.15.0.tar.xz 
+    - echo "/usr/local/bin" | sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
+    - git clone https://github.com/facebook/infer.git
+    - cd infer
+    - ./build-infer.sh java
     - export PATH=`pwd`/infer/bin:$PATH
     - infer run -- ./gradlew build
