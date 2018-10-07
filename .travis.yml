@@ -1,4 +1,16 @@
 language: android
+
+matrix:
+  include:
+
+      services:
+        - docker
+      before_install:
+        - source .scripts/prepare-container-with-infer.sh
+        # run container with installed Infer
+        - docker run -itd $INFER_IMAGE_NAME
+        # copy build folder ("infer-plugin") to container
+        - docker cp $TRAVIS_BUILD_DIR $(docker ps -q):/
 android:
   components:
     - build-tools-27.0.3
