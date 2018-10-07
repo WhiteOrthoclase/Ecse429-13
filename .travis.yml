@@ -13,9 +13,7 @@ android:
 
 script:
     - echo "/usr/local/bin" | sh <(curl -sL https://raw.githubusercontent.com/ocaml/opam/master/shell/install.sh)
-    - opam init
-    - ./configure
-    - make lib-ext
+    - echo "y" | opam pin add opam-devel --dev
     - git clone https://github.com/facebook/infer.git
     - cd infer
     - ./build-infer.sh java
