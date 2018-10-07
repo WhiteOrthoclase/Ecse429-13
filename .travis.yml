@@ -11,7 +11,7 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-    - apt install opam 
+    - docker pull ocaml/opam2 
     - git clone https://github.com/facebook/infer.git
     - cd infer
     - ./build-infer.sh java
