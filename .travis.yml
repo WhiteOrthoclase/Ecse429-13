@@ -12,7 +12,6 @@ android:
     - 'google-gdk-license-.+'
 
 script:
-    - curl -OL "https://github.com/facebook/infer/releases/tag/v0.15.0/infer-linux64-v0.15.0.tar.xz" | sudo tar -C /opt -xJ 
-    - ln -s "/opt/infer-linux64-v$VERSION/bin/infer"
+    - curl -OL "https://github.com/facebook/infer/releases/tag/v0.15.0/infer-linux64-v0.15.0.tar.xz" | sudo tar -C /opt -xJ && ln -s "/opt/infer-linux64-v$VERSION/bin/infer"
     - export PATH=`pwd`/infer/bin:$PATH
     - infer run -- ./gradlew build
